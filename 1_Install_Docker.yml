@@ -1,6 +1,18 @@
+#Dit playbook zal de volgende stappen uitvoeren:
+#Bijwerken van de APT-pakketcache.
+#Upgraden van alle geïnstalleerde pakketten.
+#Installatie van vereiste pakketten voor Docker.
+#Toevoegen van de Docker GPG-sleutel.
+#Toevoegen van de Docker APT-repository.
+#Installatie van Docker.
+#Starten en inschakelen van de Docker-service.
+#Hierdoor wordt Docker geïnstalleerd en geconfigureerd op de Ubuntu-machine.
+
+
+
 ---
-- name: Update System and Install Docker on Ubuntu
-  hosts: ubuntu_machines  # De groep van Ubuntu-machines uit het inventarisbestand
+- name: Update APT packages, Install Docker, and Start Docker service
+  hosts: Server_machines
   become: yes  # Voer taken uit met beheerdersrechten (sudo)
 
   tasks:
@@ -35,8 +47,8 @@
         name: docker-ce
         state: present
 
-    - name: Start and enable Docker service
-      systemd:
+    - name: Start Docker service
+      service:
         name: docker
-        enabled: yes
         state: started
+        enabled: yes
